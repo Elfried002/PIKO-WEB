@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <!--
+        Permet à l'interface de s'adapter correctement
+        aux smartphones, tablettes et ordinateurs.
+    -->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <!--
+        Couleur utilisée par certains navigateurs
+        mobiles pour l'interface du navigateur.
+    -->
+    <meta
+        name="theme-color"
+        content="#07111F"
+    >
+
+    <!-- Description de PIKO pour les moteurs de recherche. -->
+    <meta
+        name="description"
+        content="PIKO — Pierre, Papier, Ciseaux. Défie PIKO, construis ta série et améliore ton rang."
+    >
+
+    <!-- Titre affiché dans l'onglet du navigateur. -->
+    <title>PIKO — Pierre, Papier, Ciseaux</title>
+
+
+    <!-- =====================================================
+         POLICES
+         ===================================================== -->
+
+    <!--
+        Préconnexion aux serveurs Google Fonts
+        pour améliorer le chargement des polices.
+    -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <!--
+        Bungee :
+        identité gaming / titres.
+
+        Inter :
+        textes / interface / statistiques.
+    -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         CSS PRINCIPAL
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         CONTENEUR PRINCIPAL
+         ===================================================== -->
+
+    <div class="app-shell">
+
+
+        <!-- =================================================
+             HEADER
+             ================================================= -->
+
+        <header class="topbar">
+
+
+            <!-- =============================================
+                 IDENTITÉ PIKO
+                 ============================================= -->
+
+            <a
+                href="/"
+                class="brand"
+                aria-label="Retour à l'accueil PIKO"
+            >
+
+                <!-- Logo officiel PIKO. -->
+                <img
+                    class="brand-logo"
+                    src="{{ url_for('static', filename='assets/piko-logo.png') }}"
+                    alt="Logo PIKO"
+                >
+
+
+                <!-- Nom et description. -->
+                <div class="brand-text">
+
+                    <span class="brand-name">
+                        PIKO
+                    </span>
+
+                    <span class="brand-subtitle">
+                        Pierre • Papier • Ciseaux
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- =============================================
+                 INFORMATIONS DU JOUEUR
+                 ============================================= -->
+
+            <div class="player-summary">
+
+
+                <!-- Rang actuel. -->
+                <div class="player-rank">
+
+                    <span class="rank-label">
+                        RANG
+                    </span>
+
+                    <strong id="player-rank">
+                        🌱 DÉBUTANT
+                    </strong>
+
+                </div>
+
+
+                <!-- Séparateur. -->
+                <div class="header-divider"></div>
+
+
+                <!-- XP actuelle. -->
+                <div class="player-xp">
+
+                    <span class="xp-label">
+                        XP
+                    </span>
+
+                    <strong id="player-xp">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <!-- =========================================
+                     CONTRÔLE MUSIQUE
+                     ========================================= -->
+
+                <!--
+                    Le bouton est présent directement dans le HTML.
+
+                    JavaScript gérera :
+                    - 🔊 musique activée
+                    - 🔇 musique désactivée
+                    - localStorage
+                    - lecture / pause
+                -->
+                <button
+                    type="button"
+                    id="music-toggle"
+                    class="music-toggle"
+                    aria-label="Activer ou désactiver la musique"
+                    aria-pressed="true"
+                    title="Musique"
+                >
+                    🔊
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENU PRINCIPAL
+             ================================================= -->
+
+        <main class="main-content">
+
+
+            <!-- =================================================
+                 HERO
+                 ================================================= -->
+
+            <section class="hero-section">
+
+
+                <!-- =============================================
+                     TEXTE DE PRÉSENTATION
+                     ============================================= -->
+
+                <div class="hero-copy">
+
+
+                    <span class="eyebrow">
+                        🎮 PRÊT À JOUER ?
+                    </span>
+
+
+                    <h1>
+
+                        Affronte
+
+                        <span class="gradient-text">
+                            PIKO
+                        </span>
+
+                    </h1>
+
+
+                    <p class="hero-description">
+                        Choisis ton coup, défie l'ordinateur
+                        et construis ta série de victoires.
+                    </p>
+
+
+                    <!-- Statut du jeu. -->
+                    <div class="status-pill">
+
+                        <span
+                            class="status-dot"
+                            aria-hidden="true"
+                        ></span>
+
+                        <span>
+                            PIKO est prêt
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+                     MASCOTTE
+                     ============================================= -->
+
+                <div class="hero-mascot">
+
+
+                    <!-- Halo lumineux derrière PIKO. -->
+                    <div
+                        class="mascot-glow"
+                        aria-hidden="true"
+                    ></div>
+
+
+                    <!-- Logo / mascotte. -->
+                    <img
+                        src="{{ url_for('static', filename='assets/piko-logo.png') }}"
+                        alt="Mascotte PIKO"
+                        class="mascot-image"
+                    >
+
+
+                    <!-- Particules décoratives. -->
+                    <span
+                        class="floating-shape shape-one"
+                        aria-hidden="true"
+                    >
+                        ✦
+                    </span>
+
+                    <span
+                        class="floating-shape shape-two"
+                        aria-hidden="true"
+                    >
+                        ✦
+                    </span>
+
+                    <span
+                        class="floating-shape shape-three"
+                        aria-hidden="true"
+                    >
+                        •
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ARÈNE DE JEU
+                 ================================================= -->
+
+            <section
+                class="game-panel"
+                aria-labelledby="game-title"
+            >
+
+
+                <!-- =============================================
+                     EN-TÊTE DE L'ARÈNE
+                     ============================================= -->
+
+                <div class="game-panel-header">
+
+
+                    <div>
+
+                        <span class="section-kicker">
+                            ARÈNE PIKO
+                        </span>
+
+                        <h2 id="game-title">
+                            Choisis ton coup
+                        </h2>
+
+                    </div>
+
+
+                    <!-- Série actuelle. -->
+                    <div class="streak-card">
+
+                        <span
+                            class="streak-icon"
+                            aria-hidden="true"
+                        >
+                            🔥
+                        </span>
+
+
+                        <div class="streak-info">
+
+                            <span>
+                                SÉRIE
+                            </span>
+
+                            <strong id="current-streak">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+                     ZONE DE DUEL
+                     ============================================= -->
+
+                <div class="battle-stage">
+
+
+                    <!-- =========================================
+                         JOUEUR
+                         ========================================= -->
+
+                    <div class="fighter fighter-player">
+
+                        <span class="fighter-label">
+                            TOI
+                        </span>
+
+
+                        <div
+                            class="fighter-choice"
+                            id="player-choice-display"
+                            aria-live="polite"
+                            aria-label="Choix du joueur"
+                        >
+                            ?
+                        </div>
+
+
+                        <span
+                            class="fighter-name"
+                            id="player-name"
+                        >
+                            Joueur
+                        </span>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         VS
+                         ========================================= -->
+
+                    <div
+                        class="battle-vs"
+                        aria-hidden="true"
+                    >
+
+                        <span class="vs-line"></span>
+
+                        <strong>
+                            VS
+                        </strong>
+
+                        <span class="vs-line"></span>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         PIKO
+                         ========================================= -->
+
+                    <div class="fighter fighter-opponent">
+
+                        <span class="fighter-label">
+                            PIKO
+                        </span>
+
+
+                        <div
+                            class="fighter-choice fighter-opponent-choice"
+                            id="computer-choice-display"
+                            aria-live="polite"
+                            aria-label="Choix de PIKO"
+                        >
+                            ?
+                        </div>
+
+
+                        <span class="fighter-name">
+                            PIKO
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+                     CHOIX DU JOUEUR
+                     ============================================= -->
+
+                <div class="choices-grid">
+
+
+                    <!-- PIERRE -->
+
+                    <button
+                        type="button"
+                        class="choice-card"
+                        data-choice="pierre"
+                        aria-label="Choisir Pierre"
+                    >
+
+                        <span
+                            class="choice-icon"
+                            aria-hidden="true"
+                        >
+                            ✊
+                        </span>
+
+                        <span class="choice-name">
+                            PIERRE
+                        </span>
+
+                        <span class="choice-hint">
+                            Force brute
+                        </span>
+
+                    </button>
+
+
+                    <!-- PAPIER -->
+
+                    <button
+                        type="button"
+                        class="choice-card"
+                        data-choice="papier"
+                        aria-label="Choisir Papier"
+                    >
+
+                        <span
+                            class="choice-icon"
+                            aria-hidden="true"
+                        >
+                            📄
+                        </span>
+
+                        <span class="choice-name">
+                            PAPIER
+                        </span>
+
+                        <span class="choice-hint">
+                            Le contre parfait
+                        </span>
+
+                    </button>
+
+
+                    <!-- CISEAUX -->
+
+                    <button
+                        type="button"
+                        class="choice-card"
+                        data-choice="ciseaux"
+                        aria-label="Choisir Ciseaux"
+                    >
+
+                        <span
+                            class="choice-icon"
+                            aria-hidden="true"
+                        >
+                            ✂️
+                        </span>
+
+                        <span class="choice-name">
+                            CISEAUX
+                        </span>
+
+                        <span class="choice-hint">
+                            Précision rapide
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <!-- =============================================
+                     MESSAGE D'ÉTAT
+                     ============================================= -->
+
+                <div
+                    class="game-status"
+                    id="game-status"
+                    role="status"
+                    aria-live="polite"
+                >
+                    Choisis ton coup pour commencer.
+                </div>
+
+
+                <!-- =============================================
+                     CARTE DE RÉSULTAT
+                     ============================================= -->
+
+                <div
+                    class="result-card"
+                    id="result-card"
+                    aria-live="polite"
+                    hidden
+                >
+
+
+                    <!-- Icône résultat. -->
+                    <div
+                        class="result-icon"
+                        id="result-icon"
+                    >
+                        🏆
+                    </div>
+
+
+                    <!-- Contenu résultat. -->
+                    <div class="result-copy">
+
+                        <span class="result-kicker">
+                            RÉSULTAT
+                        </span>
+
+                        <h3 id="result-title">
+                            Victoire !
+                        </h3>
+
+                        <p id="result-message">
+                            Belle manche !
+                        </p>
+
+                    </div>
+
+
+                    <!-- XP gagnée. -->
+                    <div class="result-points">
+
+                        <span>
+                            XP
+                        </span>
+
+                        <strong id="result-xp">
+                            +0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+                     BOUTON REJOUER
+                     ============================================= -->
+
+                <button
+                    type="button"
+                    class="secondary-game-button"
+                    id="play-again-button"
+                    hidden
+                >
+                    🔄 Rejouer
+                </button>
+
+            </section>
+
+
+            <!-- =================================================
+                 STATISTIQUES
+                 ================================================= -->
+
+            <section
+                class="stats-section"
+                aria-labelledby="stats-title"
+            >
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            TES PERFORMANCES
+                        </span>
+
+                        <h2 id="stats-title">
+                            Tes statistiques
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+
+                    <!-- PARTIES -->
+
+                    <article class="stat-card">
+
+                        <span
+                            class="stat-icon"
+                            aria-hidden="true"
+                        >
+                            🎮
+                        </span>
+
+                        <div class="stat-content">
+
+                            <span>
+                                PARTIES
+                            </span>
+
+                            <strong id="stat-games">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- VICTOIRES -->
+
+                    <article class="stat-card stat-card-win">
+
+                        <span
+                            class="stat-icon"
+                            aria-hidden="true"
+                        >
+                            🏆
+                        </span>
+
+                        <div class="stat-content">
+
+                            <span>
+                                VICTOIRES
+                            </span>
+
+                            <strong id="stat-wins">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- DÉFAITES -->
+
+                    <article class="stat-card stat-card-loss">
+
+                        <span
+                            class="stat-icon"
+                            aria-hidden="true"
+                        >
+                            💥
+                        </span>
+
+                        <div class="stat-content">
+
+                            <span>
+                                DÉFAITES
+                            </span>
+
+                            <strong id="stat-losses">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- ÉGALITÉS -->
+
+                    <article class="stat-card">
+
+                        <span
+                            class="stat-icon"
+                            aria-hidden="true"
+                        >
+                            🤝
+                        </span>
+
+                        <div class="stat-content">
+
+                            <span>
+                                ÉGALITÉS
+                            </span>
+
+                            <strong id="stat-draws">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 HISTORIQUE
+                 ================================================= -->
+
+            <section
+                class="history-section"
+                aria-labelledby="history-title"
+            >
+
+
+                <div class="section-heading">
+
+
+                    <div>
+
+                        <span class="section-kicker">
+                            ACTIVITÉ
+                        </span>
+
+                        <h2 id="history-title">
+                            Dernières parties
+                        </h2>
+
+                    </div>
+
+
+                    <!--
+                        Le bouton demande maintenant confirmation
+                        côté JavaScript avant de réinitialiser
+                        les données côté serveur.
+                    -->
+                    <button
+                        type="button"
+                        class="text-button"
+                        id="clear-history-button"
+                    >
+                        Effacer
+                    </button>
+
+                </div>
+
+
+                <!--
+                    JavaScript remplira dynamiquement
+                    cette zone avec l'historique réel.
+                -->
+
+                <div
+                    class="history-list"
+                    id="history-list"
+                >
+
+                    <div class="empty-history">
+
+                        <span
+                            class="empty-history-icon"
+                            aria-hidden="true"
+                        >
+                            🎮
+                        </span>
+
+                        <p>
+                            Tes parties apparaîtront ici.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- =================================================
+             FOOTER
+             ================================================= -->
+
+        <footer class="footer">
+
+
+            <div class="footer-brand">
+
+                <span class="footer-logo">
+                    PIKO
+                </span>
+
+                <span>
+                    Joue • Défie • Progresse
+                </span>
+
+            </div>
+
+
+            <span class="footer-note">
+                Une expérience de jeu propulsée par Python.
+            </span>
+
+        </footer>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <!--
+        defer permet de charger le script sans bloquer
+        l'affichage de la page.
+    -->
+    <script
+        src="{{ url_for('static', filename='js/app.js') }}"
+        defer
+    ></script>
+
+
+</body>
+
+</html>
