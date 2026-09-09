@@ -7,24 +7,25 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
-# Tous les fichiers de l'application seront placés ici.
+# Répertoire de travail de l'application.
 WORKDIR /app
 
-# On copie d'abord les dépendances.
-# Cela permet à Docker de réutiliser son cache
-# si seul le code source change.
+# Copie des dépendances.
 COPY requirements.txt .
 
 # Installation des dépendances Python.
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copie du code de l'application.
-COPY app.py .
-COPY core.py .
+# Copie de l'ensemble de l'application.
+# Cela inclut notamment :
+# - app.py
+# - core.py
+# - templates/
+# - static/
+COPY . .
 
-# Railway fournit PORT au moment du lancement.
-# 8080 sert simplement de valeur indicative.
+# Port utilisé par Railway.
 EXPOSE 8080
 
-# Commande de démarrage du conteneur.
+# Démarrage de l'application.
 CMD ["python", "app.py"]
